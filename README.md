@@ -153,4 +153,4 @@ Photomoaは撮影場所を地図にマッピングすることで、
 https://www.figma.com/design/FZAoWnSCrKOzvoKXVPwLPO/Photomoa_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=89-3&t=JkT3lHQ1cwNyJqUV-1
 
 ER図
-[![Image from Gyazo](https://i.gyazo.com/b85c6928dd0ed5c9faf9e4397879b0dc.png)](https://gyazo.com/b85c6928dd0ed5c9faf9e4397879b0dc)
+[![Image from Gyazo](https://i.gyazo.com/1f81df651ea1dee169e7e634900f53cd.png)](https://gyazo.com/1f81df651ea1dee169e7e634900f53cd)
