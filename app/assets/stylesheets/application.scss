@@ -8,3 +8,22 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+ // app/assets/stylesheets/application.scss
+ @import "bootstrap";
+
+ .btn-custom-login {
+   background-color: #615050;
+   border-color: #615050;
+   color: white;
+   transition: background-color 0.3s ease;
+ }
+
+ .btn-custom-login:hover,
+ .btn-custom-login:focus,
+ .btn-custom-login:active {
+   background-color: #4b3e3e;
+   border-color: #4b3e3e;
+   color: white;
+   outline: none;
+   box-shadow: none;
+ }

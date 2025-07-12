@@ -32,3 +32,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# macOSの不要ファイルを無視
+.DS_Store
