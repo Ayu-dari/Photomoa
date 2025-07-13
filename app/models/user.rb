@@ -3,7 +3,7 @@ class User < ApplicationRecord
   attr_accessor :terms
 
   # 利用規約チェックが必須なバリデーション
-  validates :terms, acceptance: { accept: '1', message: "に同意してください" }
+  validates :terms, acceptance: { accept: "1", message: "に同意してください" }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
