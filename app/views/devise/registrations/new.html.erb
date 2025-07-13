@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100" style="background-color: #EADDDD;">
+  <div class="signup-box">
+    <div class="text-start mb-5">
+      <%= link_to "← ホームに戻る", root_path, class: "back-button text-decoration-none text-dark" %>
+    </div>
+
+    <div class="logo-title mb-4 text-center">
+      <a class="navbar-brand fw-bold d-flex align-items-center justify-content-center fs-1" href="<%= root_path %>" style="color: #EC69EC;">
+        <%= image_tag 'photomoa_cat.png', alt: 'Photomoa', width: 70, height: 70, class: 'd-inline-block align-text-top me-2' %>
+        Photomoa
+      </a>
+    </div>
+
+    <div class="text-center mb-4">
+      <h2 class="mb-3">アカウントを作成</h2>
+      <p class="subtitle">あなただけの思い出の地図を始めましょう</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |form| %>
+      <div class="mb-3">
+        <%= form.label :name, "お名前" %>
+        <%= form.text_field :name, placeholder: "名前を入力", class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :email, "メールアドレス" %>
+        <%= form.email_field :email, placeholder: "your@email.com", class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :password, "パスワード" %>
+        <%= form.password_field :password, placeholder: "パスワードを入力", class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :password_confirmation, "パスワード（確認）" %>
+        <%= form.password_field :password_confirmation, placeholder: "パスワードを入力", class: "form-control" %>
+      </div>
+
+      <div class="form-check mb-4 text-start">
+        <%= form.check_box :terms, { required: true, class: "form-check-input" }, '1', '0' %>
+        <%= form.label :terms, "利用規約およびプライバシーポリシーに同意します", class: "form-check-label" %>
+      </div>
+
+      <%= form.submit "登録", class: "btn btn-primary w-100", style: "background-color: #E256C1; border-color: #E256C1;" %>
+    <% end %>
+  </div>
+</div>
