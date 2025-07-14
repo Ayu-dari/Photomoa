@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   }
 
   # 投稿関連
-  resources :posts, only: [:new, :create, :index]
+  resources :posts, only: [ :new, :create, :index ]
 
   # マイページ（ログイン後のリダイレクト先）
   get "mypage", to: "users#mypage", as: "mypage"
