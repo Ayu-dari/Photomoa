@@ -29,6 +29,11 @@
   <% end %>
 </div>
 
+<!-- ユーザー名表示 -->
+<div class="text-center my-4">
+  <p class="mt-2 fw-bold"><%= current_user.name %></p>
+</div>
+
 <!-- ボタンエリア -->
 <div class="text-center mt-3">
   <%= link_to "投稿する", new_post_path, class: "btn btn-success mx-2" %>
