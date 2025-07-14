@@ -36,14 +36,80 @@
 
 <!-- ボタンエリア -->
 <div class="text-center mt-3">
-  <%= link_to "投稿する", new_post_path, class: "btn btn-success mx-2" %>
-  <%= link_to "投稿を検索する", posts_path, class: "btn btn-info mx-2" %>
+  <%= link_to "投稿する", new_post_path, class: "btn btn-success text-white mx-2" %>
+  <%= link_to "投稿を検索する", posts_path, class: "btn btn-info text-white mx-2" %>
 </div>
 
-<footer class="text-center py-4" style="background-color: #615050; color: #fff;">
-  <div class="container">
-    <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
-    <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
-    <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
+<div class="container my-4">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs justify-content-center" id="mypageTabs" role="tablist" style="width: 100%;">
+    <li class="nav-item text-center flex-fill" role="presentation">
+      <button class="nav-link active w-100" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab" aria-controls="posts" aria-selected="true"
+        style="background-color: #D1C588; color: #FFFFFF; font-weight: bold;">
+        最新投稿一覧
+      </button>
+    </li>
+    <li class="nav-item text-center flex-fill" role="presentation">
+      <button class="nav-link w-100" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab" aria-controls="favorites" aria-selected="false"
+        style="background-color: #DDD4EE; color: #FFFFFF; font-weight: bold;">
+        お気に入り
+      </button>
+    </li>
+  </ul>
+</div>
+
+
+
+  <!-- Tab panes -->
+  <div class="tab-content mt-3" id="mypageTabsContent">
+    <!-- 最新投稿一覧 -->
+    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab"
+     style="background-color: #FFF6E5; padding: 20px; border-radius: 10px;">
+  <div class="post-cards">
+    <% if @posts.present? %>
+      <% @posts.each do |post| %>
+        <div class="post-card">
+          <%= image_tag(post.image, alt: "投稿画像") %>
+          <h4><%= post.title %></h4>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="p-3 rounded text-center" style="background-color: #FFEFD5;">
+        投稿がまだありません。
+      </p>
+    <% end %>
   </div>
-</footer>
+</div>
+
+    <!-- お気に入り -->
+    <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab"
+     style="background-color: #F3EAFB; padding: 20px; border-radius: 10px;">
+  <div class="post-cards">
+    <% if @favorites.present? %>
+      <% @favorites.each do |post| %>
+        <div class="post-card">
+          <%= image_tag(post.image, alt: "お気に入り画像") %>
+          <h4><%= post.title %></h4>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="p-3 rounded text-center" style="background-color: #FBEAFF;">
+        お気に入りがまだありません。
+      </p>
+    <% end %>
+  </div>
+</div>
+  </div>
+</div>
+
+<body class="d-flex flex-column min-vh-100">
+  <%= yield %>
+
+  <footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
+    <div class="container">
+      <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
+      <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
+      <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
+    </div>
+  </footer>
+</body>

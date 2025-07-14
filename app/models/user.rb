@@ -1,12 +1,18 @@
 class User < ApplicationRecord
   has_one_attached :avatar
-  # 仮想属性としてtermsを扱う（DBにはない）
-  attr_accessor :terms
 
-  # 利用規約チェックが必須なバリデーション
+  # お気に入り機能
+  has_many :favorites
+  has_many :favorite_posts, through: :favorites, source: :post
+
+  # 投稿
+  has_many :posts
+
+  # 利用規約の仮想属性とバリデーション
+  attr_accessor :terms
   validates :terms, acceptance: { accept: "1", message: "に同意してください" }
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  # Deviseの認証
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end
