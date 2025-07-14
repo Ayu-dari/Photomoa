@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one_attached :avatar
   # 仮想属性としてtermsを扱う（DBにはない）
   attr_accessor :terms
 
