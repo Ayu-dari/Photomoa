@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   registrations: 'users/registrations'
 }
 
-  resources :posts
+  resources :posts, only: [:new, :create, :index]
 
   get "home/top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
