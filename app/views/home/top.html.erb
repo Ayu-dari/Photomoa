@@ -5,9 +5,11 @@
       Photomoa
     </a>
     <div>
-      <!-- 実際のログインページのパスに変更してください -->
-      <a href="javascript:void(0)" class="btn btn-custom-login">ログイン</a>
-      <!-- 実際の「始める」ページのパスに変更してください -->
+
+      <%= link_to new_user_session_path, class: "btn btn-outline-dark d-inline-flex align-items-center" do %>
+  <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
+<% end %>
+
       <a href="<%= new_user_registration_path %>" class="btn btn-primary" style="background-color: #E256C1; border-color: #E256C1;">始める</a>
     </div>
   </div>

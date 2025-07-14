@@ -1,27 +1,21 @@
 Rails.application.routes.draw do
-  get "users/mypage"
+  # Devise routes（ユーザー登録・ログイン関連）
   devise_for :users, controllers: {
-  registrations: "users/registrations"
-}
+    registrations: "users/registrations"
+  }
 
-  resources :posts, only: [ :new, :create, :index ]
+  # 投稿関連
+  resources :posts, only: [:new, :create, :index]
 
-  get "home/top"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # マイページ用ルート
+  # マイページ（ログイン後のリダイレクト先）
   get "mypage", to: "users#mypage", as: "mypage"
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # ホーム画面
+  get "home/top"
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Health check
+  get "up" => "rails/health#show", as: :rails_health_check
 
-  root "home#top"  # トップページを homeコントローラーの topアクションに設定
+  # トップページ
+  root "home#top"
 end

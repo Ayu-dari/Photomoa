@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     root_path
   end
+
+  # ログイン後の遷移先をマイページに変更
+  def after_sign_in_path_for(resource)
+    flash[:notice] = "ログインしました。"
+    mypage_path  # トップページ → マイページ に変更
+  end
 end
