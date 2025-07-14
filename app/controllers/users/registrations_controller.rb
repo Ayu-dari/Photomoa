@@ -10,6 +10,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Strong Parametersに:termsを追加
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :terms])
+      devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :terms ])
     end
-  end
+end

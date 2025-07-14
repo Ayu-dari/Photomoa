@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   get "users/mypage"
   devise_for :users, controllers: {
-  registrations: 'users/registrations'
+  registrations: "users/registrations"
 }
 
-  resources :posts, only: [:new, :create, :index]
+  resources :posts, only: [ :new, :create, :index ]
 
   get "home/top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # マイページ用ルート
-  get 'mypage', to: 'users#mypage', as: 'mypage'
+  get "mypage", to: "users#mypage", as: "mypage"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
