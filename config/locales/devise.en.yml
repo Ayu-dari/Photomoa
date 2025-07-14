@@ -1,5 +1,9 @@
 ja:
   devise:
+    shared:
+      links:
+        sign_up: "新規登録"
+        forgot_your_password: "パスワードをお忘れですか？"
     confirmations:
       confirmed: "メールアドレスの確認が完了しました。"
       send_instructions: "確認メールを数分以内に送信します。"
