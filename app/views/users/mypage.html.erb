@@ -15,7 +15,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item"><%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+        <% if user_signed_in? %>
+    <div class="text-end me-3 mt-3">
+      <%= button_to "ログアウト", destroy_user_session_path,
+            method: :delete,
+            data: { confirm: "本当にログアウトしますか？" },
+            class: "btn btn-outline-danger btn-sm" %>
+    </div>
+  <% end %>
       </ul>
     </div>
   </div>
