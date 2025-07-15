@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EADDDD;">
-  <div class="container">
+  <div class="container-xl">
     <a class="navbar-brand fw-bold d-flex align-items-center" href="<%= root_path %>" style="color: #EC69EC;">
       <%= image_tag 'photomoa_cat.png', alt: 'Photomoa', width: 30, height: 30, class: 'd-inline-block align-text-top me-2' %>
       Photomoa
     </a>
-    <div>
-
+    <div class="d-flex gap-2">
       <%= link_to new_user_session_path, class: "btn btn-outline-dark d-inline-flex align-items-center" do %>
-  <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
-<% end %>
+        <i class="bi bi-box-arrow-in-right me-1"></i> ログイン
+      <% end %>
 
       <a href="<%= new_user_registration_path %>" class="btn btn-primary" style="background-color: #E256C1; border-color: #E256C1;">始める</a>
     </div>
@@ -21,65 +20,67 @@
   <p>写真と思い出をメモとして残し、地図にマッピングして記録・共有。<br>
   “記録”にとどまらず、“記憶”や“感情”を可視化するアプリ</p>
 
-  <div class="row mt-5">
-    <div class="col-md-4 mb-4">
-      <div class="p-3 border rounded">
-        <i class="bi bi-camera fs-1 mb-2"></i>
-        <h5>写真で記録</h5>
-        <p>お気に入りの瞬間を写真に残して、メモと一緒に保存</p>
+  <div class="container-xl">
+    <div class="row g-4 mt-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 border rounded h-100">
+          <i class="bi bi-camera fs-1 mb-2"></i>
+          <h5>写真で記録</h5>
+          <p>お気に入りの瞬間を写真に残して、メモと一緒に保存</p>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="p-3 border rounded">
-        <i class="bi bi-geo-alt fs-1 mb-2"></i>
-        <h5>地図でつなぐ</h5>
-        <p>撮影場所を地図上にマッピングして、思い出を可視化</p>
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 border rounded h-100">
+          <i class="bi bi-geo-alt fs-1 mb-2"></i>
+          <h5>地図でつなぐ</h5>
+          <p>撮影場所を地図上にマッピングして、思い出を可視化</p>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div class="p-3 border rounded">
-        <i class="bi bi-heart fs-1 mb-2"></i>
-        <h5>感情を残す</h5>
-        <p>メモと一緒に感情を記録し、物語のある思い出作り</p>
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 border rounded h-100">
+          <i class="bi bi-heart fs-1 mb-2"></i>
+          <h5>感情を残す</h5>
+          <p>メモと一緒に感情を記録し、物語のある思い出作り</p>
+        </div>
       </div>
     </div>
   </div>
 </header>
 
 <section class="py-5" style="background-color: #ede0da;">
-  <div class="container">
+  <div class="container-xl">
     <h2 class="text-center mb-4">
       あなたの思い出を <span class="fw-bold" style="color: #E44CEC;">特別な体験</span> に
     </h2>
     <p class="text-center mb-5">写真が単なる記録ではなく、物語として残る機能をご用意しました</p>
 
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="p-3 bg-white shadow rounded">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 bg-white shadow rounded h-100">
           <h5>写真投稿機能</h5>
           <p>画像・タイトル・メモ・位置情報を一緒に記録</p>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="p-3 bg-white shadow rounded">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 bg-white shadow rounded h-100">
           <h5>地図表示</h5>
           <p>投稿された写真を地図上にピンで表示</p>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="p-3 bg-white shadow rounded">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 bg-white shadow rounded h-100">
           <h5>タグ機能</h5>
           <p>タグ付けで取り込んだ思い出を整理</p>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="p-3 bg-white shadow rounded">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 bg-white shadow rounded h-100">
           <h5>思い出カレンダー</h5>
           <p>月別に投稿を整理して振り返り</p>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="p-3 bg-white shadow rounded">
+      <div class="col-lg-4 col-md-6">
+        <div class="p-3 bg-white shadow rounded h-100">
           <h5>高度な検索</h5>
           <p>場所・タグ・日付で簡単検索</p>
         </div>
@@ -89,7 +90,7 @@
 </section>
 
 <footer class="text-center py-4" style="background-color: #615050; color: #fff;">
-  <div class="container">
+  <div class="container-xl">
     <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
     <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
     <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
