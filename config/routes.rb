@@ -4,8 +4,8 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
 
-  # 投稿関連
-  resources :posts, only: [ :new, :create, :index ]
+  # 投稿関連（全アクション許可）
+  resources :posts
 
   # マイページ（ログイン後のリダイレクト先）
   get "mypage", to: "users#mypage", as: "mypage"

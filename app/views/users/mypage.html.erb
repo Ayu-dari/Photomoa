@@ -70,14 +70,47 @@
   <!-- Tab panes -->
   <div class="tab-content mt-3" id="mypageTabsContent">
     <!-- 最新投稿一覧 -->
-    <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab"
+<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab"
      style="background-color: #FFF6E5; padding: 20px; border-radius: 10px;">
-  <div class="post-cards">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
     <% if @posts.present? %>
       <% @posts.each do |post| %>
-        <div class="post-card">
-          <%= image_tag(post.image, alt: "投稿画像") %>
-          <h4><%= post.title %></h4>
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <% if post.image.attached? %>
+              <%= image_tag post.image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+            <% else %>
+              <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                <i class="bi bi-image fs-1 text-muted"></i>
+              </div>
+            <% end %>
+
+            <div class="card-body">
+              <h5 class="card-title fw-bold"><%= post.title %></h5>
+              <p class="card-text"><%= simple_format(post.body) %></p>
+              <p class="card-text text-muted">📍 <%= post.location.presence || "未設定" %></p>
+
+              <% if post.tags.present? %>
+                <div class="mb-2">
+                  <% post.tags.each do |tag| %>
+                    <span class="badge bg-secondary">#<%= tag.name %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <div>
+                <%= link_to edit_post_path(post), class: "text-decoration-none me-2 text-dark" do %>
+                  <i class="bi bi-pencil"></i> 編集
+                <% end %>
+                <%= link_to post_path(post), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "text-danger text-decoration-none" do %>
+                  <i class="bi bi-trash"></i> 削除
+                <% end %>
+              </div>
+              <small class="text-muted"><%= post.created_at.strftime("%Y/%m/%d") %></small>
+            </div>
+          </div>
         </div>
       <% end %>
     <% else %>
@@ -87,6 +120,7 @@
     <% end %>
   </div>
 </div>
+
 
     <!-- お気に入り -->
     <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab"
