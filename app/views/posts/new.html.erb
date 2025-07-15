@@ -60,13 +60,13 @@
     </div>
 
     <!-- 撮影場所 -->
-    <div class="mb-4">
-      <%= f.label :location, "撮影場所", class: "form-label fw-bold" %>
-      <div class="d-flex">
-        <%= f.text_field :location, class: "form-control me-2", placeholder: "例：渋谷のおしゃれカフェ" %>
-        <button type="button" class="btn btn-primary">現在地取得</button>
-      </div>
-    </div>
+<div class="mb-4">
+  <%= f.label :location, "撮影場所", class: "form-label fw-bold" %>
+  <div class="d-flex">
+    <%= f.text_field :location, class: "form-control me-2", id: "location_input", placeholder: "例：渋谷のおしゃれカフェ" %>
+    <button type="button" id="get_location_btn" class="btn btn-primary">現在地取得</button>
+  </div>
+</div>
 
     <!-- タグ -->
     <div class="mb-4">
@@ -87,33 +87,71 @@
 <!-- JavaScript（フォームの後） -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // 画像プレビュー処理
     const fileInput = document.getElementById('image_upload');
     const previewArea = document.getElementById('image_preview');
-    if (!fileInput || !previewArea) return;
+    if (fileInput && previewArea) {
+      fileInput.addEventListener('change', function(event) {
+        previewArea.innerHTML = '';
+        const files = event.target.files;
+        if (!files || files.length === 0) return;
 
-    fileInput.addEventListener('change', function(event) {
-      previewArea.innerHTML = '';
-      const files = event.target.files;
-      if (!files || files.length === 0) return;
+        Array.from(files).forEach(file => {
+          if (!file.type.startsWith('image/')) return;
+          const reader = new FileReader();
+          const img = document.createElement('img');
+          img.style.maxWidth = '100%';
+          img.style.maxHeight = '200px';
+          img.style.borderRadius = '10px';
+          img.style.marginTop = '10px';
 
-      Array.from(files).forEach(file => {
-        if (!file.type.startsWith('image/')) return;
-        const reader = new FileReader();
-        const img = document.createElement('img');
-        img.style.maxWidth = '100%';
-        img.style.maxHeight = '200px';
-        img.style.borderRadius = '10px';
-        img.style.marginTop = '10px';
-
-        reader.onload = function(e) {
-          img.src = e.target.result;
-          previewArea.appendChild(img);
-        };
-        reader.readAsDataURL(file);
+          reader.onload = function(e) {
+            img.src = e.target.result;
+            previewArea.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
       });
-    });
+    }
+
+    // 現在地取得 → 撮影場所へ反映
+    const locationBtn = document.getElementById('get_location_btn');
+    const locationInput = document.getElementById('location_input');
+
+    if (locationBtn && locationInput) {
+      locationBtn.addEventListener('click', function () {
+        if (!navigator.geolocation) {
+          alert("お使いのブラウザでは位置情報がサポートされていません。");
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+              .then(response => response.json())
+              .then(data => {
+                if (data && data.display_name) {
+                  locationInput.value = data.display_name;
+                } else {
+                  alert("住所を取得できませんでした。");
+                }
+              })
+              .catch(() => {
+                alert("住所の取得中にエラーが発生しました。");
+              });
+          },
+          function () {
+            alert("位置情報を取得できませんでした。");
+          }
+        );
+      });
+    }
   });
 </script>
+
 
 <footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
   <div class="container-xl">
