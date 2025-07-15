@@ -1,20 +1,108 @@
-<h1>新しい投稿を作成</h1>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EADDDD;">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="<%= root_path %>" style="color: #EC69EC;">
+      <%= image_tag 'photomoa_cat.png', alt: 'Photomoa', width: 30, height: 30, class: 'd-inline-block align-text-top me-2' %>
+      Photomoa
+    </a>
 
-<%= form_with model: @post, local: true do |f| %>
-  <div class="mb-3">
-    <%= f.label :title, "タイトル" %>
-    <%= f.text_field :title, class: "form-control" %>
+    <!-- ハンバーガーメニューのトグルボタン -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" data-turbo="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- 折りたたむメニューの中身 -->
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <!-- ✅ マイページに戻る -->
+    <li class="nav-item">
+      <%= link_to "マイページに戻る", mypage_path(current_user), class: "nav-link" %>
+    </li>
+
+    <!-- プロフィール編集 -->
+    <li class="nav-item">
+      <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link" %>
+    </li>
+  </ul>
+
+  <% if user_signed_in? %>
+    <div class="text-end me-3 mt-3">
+      <%= button_to "ログアウト", destroy_user_session_path,
+            method: :delete,
+            data: { confirm: "本当にログアウトしますか？" },
+            class: "btn btn-outline-danger btn-sm" %>
+    </div>
+  <% end %>
+</div>
+
   </div>
+</nav>
 
-  <div class="mb-3">
-    <%= f.label :body, "メモ" %>
-    <%= f.text_area :body, rows: 5, class: "form-control" %>
+<div class="container my-5">
+  <h2 class="text-center text-white py-3" style="background-color: #99D19C;">思い出を投稿する</h2>
+
+  <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
+    <!-- 写真を選択 -->
+    <div class="mb-4">
+  <label class="form-label fw-bold">写真を選択</label>
+  <div class="p-4 text-center" style="border: 2px dashed #d8bcbc; background-color: #f4e9e9;">
+    <%= f.file_field :image, class: "d-none", id: "image_upload" %>
+    <label for="image_upload" style="cursor: pointer; color: #a64c94;">
+      <div>
+        <!-- ✅ カメラのアイコン（Bootstrap Icons使用） -->
+        <i class="bi bi-camera fs-1 mb-2"></i><br>
+        <strong>写真をドラッグ＆ドロップ</strong><br>
+        または <u>クリックして選択</u>
+      </div>
+    </label>
   </div>
+</div>
 
-  <div class="mb-3">
-    <%= f.label :image, "画像" %>
-    <%= f.file_field :image, class: "form-control" %>
-  </div>
+    <!-- タイトル -->
+    <div class="mb-4">
+      <%= f.label :title, "タイトル", class: "form-label fw-bold" %>
+      <%= f.text_field :title, class: "form-control", placeholder: "例：美味しいケーキを発見！" %>
+    </div>
 
-  <%= f.submit "投稿する", class: "btn btn-primary" %>
-<% end %>
+    <!-- メモ・感想 -->
+    <div class="mb-4">
+      <%= f.label :body, "メモ・感想", class: "form-label fw-bold" %>
+      <%= f.text_area :body, rows: 5, class: "form-control", placeholder: "この場所での思い出や感想を書いてください…" %>
+    </div>
+
+    <!-- 撮影場所 -->
+    <div class="mb-4">
+      <%= f.label :location, "撮影場所", class: "form-label fw-bold" %>
+      <div class="d-flex">
+        <%= f.text_field :location, class: "form-control me-2", placeholder: "例：渋谷のおしゃれカフェ" %>
+        <button type="button" class="btn btn-primary">現在地取得</button>
+      </div>
+    </div>
+
+    <!-- タグ -->
+    <div class="mb-4">
+      <%= f.label :tag_names, "タグ", class: "form-label fw-bold" %>
+      <div class="d-flex">
+        <%= text_field_tag :tag_names, nil, class: "form-control me-2", placeholder: "例：カフェ、スイーツ、デート" %>
+        <button type="button" class="btn btn-primary">追加</button>
+      </div>
+    </div>
+
+    <!-- 投稿ボタン -->
+    <div class="text-center mt-5">
+      <%= f.submit "思い出を投稿", class: "btn px-5 py-3 fw-bold text-white", style: "background-color: #EC69EC;" %>
+    </div>
+  <% end %>
+</div>
+
+<body class="d-flex flex-column min-vh-100">
+  <%= yield %>
+
+  <footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
+    <div class="container">
+      <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
+      <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
+      <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
+    </div>
+  </footer>
+</body>

@@ -6,4 +6,8 @@ class UsersController < ApplicationController
     @posts = current_user.posts.order(created_at: :desc).limit(10)
     @favorites = current_user.favorite_posts
   end
+
+  def show
+    @user = User.find(params[:id])
+  end
 end
