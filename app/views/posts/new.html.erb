@@ -12,29 +12,25 @@
     </button>
 
     <!-- 折りたたむメニューの中身 -->
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-    <!-- ✅ マイページに戻る -->
-    <li class="nav-item">
-      <%= link_to "マイページに戻る", mypage_path(current_user), class: "nav-link" %>
-    </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "マイページに戻る", mypage_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link" %>
+        </li>
+      </ul>
 
-    <!-- プロフィール編集 -->
-    <li class="nav-item">
-      <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link" %>
-    </li>
-  </ul>
-
-  <% if user_signed_in? %>
-    <div class="text-end me-3 mt-3">
-      <%= button_to "ログアウト", destroy_user_session_path,
-            method: :delete,
-            data: { confirm: "本当にログアウトしますか？" },
-            class: "btn btn-outline-danger btn-sm" %>
+      <% if user_signed_in? %>
+        <div class="text-end me-3 mt-3">
+          <%= button_to "ログアウト", destroy_user_session_path,
+                method: :delete,
+                data: { confirm: "本当にログアウトしますか？" },
+                class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
-
   </div>
 </nav>
 
@@ -42,21 +38,21 @@
   <h2 class="text-center text-white py-3" style="background-color: #99D19C;">思い出を投稿する</h2>
 
   <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
-    <!-- 写真を選択 -->
+    <!-- 写真 -->
     <div class="mb-4">
-  <label class="form-label fw-bold">写真を選択</label>
-  <div class="p-4 text-center" style="border: 2px dashed #d8bcbc; background-color: #f4e9e9;">
-    <%= f.file_field :image, class: "d-none", id: "image_upload" %>
-    <label for="image_upload" style="cursor: pointer; color: #a64c94;">
-      <div>
-        <!-- ✅ カメラのアイコン（Bootstrap Icons使用） -->
-        <i class="bi bi-camera fs-1 mb-2"></i><br>
-        <strong>写真をドラッグ＆ドロップ</strong><br>
-        または <u>クリックして選択</u>
+      <label class="form-label fw-bold">写真を選択</label>
+      <div class="p-4 text-center" style="border: 2px dashed #d8bcbc; background-color: #f4e9e9;">
+        <%= f.file_field :image, class: "d-none", id: "image_upload" %>
+        <label for="image_upload" style="cursor: pointer; color: #a64c94;">
+          <div>
+            <i class="bi bi-camera fs-1 mb-2"></i><br>
+            <strong>写真をドラッグ＆ドロップ</strong><br>
+            または <u>クリックして選択</u>
+          </div>
+        </label>
+        <div id="image_preview"></div>
       </div>
-    </label>
-  </div>
-</div>
+    </div>
 
     <!-- タイトル -->
     <div class="mb-4">
@@ -95,14 +91,41 @@
   <% end %>
 </div>
 
-<body class="d-flex flex-column min-vh-100">
-  <%= yield %>
+<!-- JavaScript（フォームの後） -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const fileInput = document.getElementById('image_upload');
+    const previewArea = document.getElementById('image_preview');
+    if (!fileInput || !previewArea) return;
 
-  <footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
-    <div class="container">
-      <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
-      <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
-      <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
-    </div>
-  </footer>
-</body>
+    fileInput.addEventListener('change', function(event) {
+      previewArea.innerHTML = '';
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        const img = document.createElement('img');
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '200px';
+        img.style.borderRadius = '10px';
+        img.style.marginTop = '10px';
+
+        reader.onload = function(e) {
+          img.src = e.target.result;
+          previewArea.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  });
+</script>
+
+<footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
+  <div class="container">
+    <a href="#" class="text-white text-decoration-underline me-3">利用規約</a>
+    <a href="#" class="text-white text-decoration-underline">プライバシーポリシー</a>
+    <p class="mt-3 mb-0">© 2025 Photomoa. All rights reserved.</p>
+  </div>
+</footer>
