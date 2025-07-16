@@ -3,7 +3,11 @@ class UsersController < ApplicationController
 
   def mypage
     @user = current_user
-    @posts = current_user.posts.order(created_at: :desc).limit(10)
+    @posts = current_user.posts.order(created_at: :desc)
     @favorites = current_user.favorite_posts
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 end
