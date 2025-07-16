@@ -86,18 +86,20 @@
 
 <!-- JavaScript（フォームの後） -->
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // 画像プレビュー処理
+  document.addEventListener('turbo:load', function () {
+    // 画像プレビュー
     const fileInput = document.getElementById('image_upload');
     const previewArea = document.getElementById('image_preview');
+
     if (fileInput && previewArea) {
-      fileInput.addEventListener('change', function(event) {
+      fileInput.addEventListener('change', function (event) {
         previewArea.innerHTML = '';
         const files = event.target.files;
         if (!files || files.length === 0) return;
 
         Array.from(files).forEach(file => {
           if (!file.type.startsWith('image/')) return;
+
           const reader = new FileReader();
           const img = document.createElement('img');
           img.style.maxWidth = '100%';
@@ -105,53 +107,53 @@
           img.style.borderRadius = '10px';
           img.style.marginTop = '10px';
 
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             img.src = e.target.result;
             previewArea.appendChild(img);
           };
+
           reader.readAsDataURL(file);
         });
       });
     }
 
-    // 現在地取得 → 撮影場所へ反映
-    const locationBtn = document.getElementById('get_location_btn');
-    const locationInput = document.getElementById('location_input');
+    // 現在地取得（OpenStreetMap Nominatim）
+    const locationButton = document.querySelector('.btn.btn-primary');
+    const locationInput = document.querySelector('input[name="post[location]"]');
 
-    if (locationBtn && locationInput) {
-      locationBtn.addEventListener('click', function () {
+    if (locationButton && locationInput) {
+      locationButton.addEventListener('click', function () {
         if (!navigator.geolocation) {
-          alert("お使いのブラウザでは位置情報がサポートされていません。");
+          alert('このブラウザでは現在地を取得できません。');
           return;
         }
 
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const { latitude, longitude } = position.coords;
 
-            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-              .then(response => response.json())
-              .then(data => {
-                if (data && data.display_name) {
-                  locationInput.value = data.display_name;
-                } else {
-                  alert("住所を取得できませんでした。");
-                }
-              })
-              .catch(() => {
-                alert("住所の取得中にエラーが発生しました。");
-              });
-          },
-          function () {
-            alert("位置情報を取得できませんでした。");
-          }
-        );
+          // Nominatimで住所取得（APIキー不要）
+          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=ja`)
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.display_name) {
+                locationInput.value = data.display_name;
+              } else {
+                locationInput.value = `緯度: ${latitude.toFixed(5)}, 経度: ${longitude.toFixed(5)}`;
+                alert('住所の取得に失敗しました。');
+              }
+            })
+            .catch(() => {
+              locationInput.value = `緯度: ${latitude.toFixed(5)}, 経度: ${longitude.toFixed(5)}`;
+              alert('住所取得中にエラーが発生しました');
+            });
+
+        }, function () {
+          alert('現在地を取得できませんでした。');
+        });
       });
     }
   });
 </script>
-
 
 <footer class="mt-auto text-center py-4" style="background-color: #615050; color: #fff;">
   <div class="container-xl">
