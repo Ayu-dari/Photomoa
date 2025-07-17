@@ -2,6 +2,9 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: db
+  username: postgres
+  password: password
 
 development:
   <<: *default
@@ -23,6 +26,10 @@ cable:
   <<: *default
   url: <%= ENV["CABLE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
 
-queue:  # ここを追加
+queue:
   <<: *default
   url: <%= ENV["QUEUE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
+
+cache:
+  <<: *default
+  url: <%= ENV["CACHE_DATABASE_URL"] || ENV["DATABASE_URL"] %>
