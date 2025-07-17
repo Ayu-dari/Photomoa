@@ -2,16 +2,18 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: mizoguchiayu    # 追加
-  host: localhost           # 追加
 
 development:
   <<: *default
   database: photomoa_development
+  username: mizoguchiayu
+  host: localhost
 
 test:
   <<: *default
   database: photomoa_test
+  username: mizoguchiayu
+  host: localhost
 
 production:
   <<: *default
