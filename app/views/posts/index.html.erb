@@ -56,16 +56,14 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // ここで地図の初期化などを行う（Leafletなど）
-
-    const map = L.map('map').setView([35.68, 139.76], 13); // 東京中心例
+    const map = L.map('map').setView([35.68, 139.76], 13); // 初期表示：東京駅周辺
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // 例：現在地ボタン
+    // ✅ 現在地ボタン
     document.getElementById('current_location_btn').addEventListener('click', () => {
       if (!navigator.geolocation) {
         alert('このブラウザでは現在地を取得できません。');
@@ -85,7 +83,37 @@
       });
     });
 
-    // TODO: 店名やタグでの絞り込み処理やカレンダーUIの制御を実装
+    // ✅ 検索ボタン → 店名/地名からマーカー表示
+    document.getElementById('search_location_btn').addEventListener('click', () => {
+      const keyword = document.getElementById('search_location').value;
+      if (!keyword) {
+        alert("検索ワードを入力してください");
+        return;
+      }
+
+      // Nominatim APIを使ってジオコーディング
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            alert("場所が見つかりませんでした");
+            return;
+          }
+
+          const lat = data[0].lat;
+          const lon = data[0].lon;
+          const name = data[0].display_name;
+
+          map.setView([lat, lon], 15);
+          L.marker([lat, lon]).addTo(map)
+            .bindPopup(name)
+            .openPopup();
+        })
+        .catch(error => {
+          console.error("検索中にエラーが発生しました:", error);
+          alert("検索に失敗しました");
+        });
+    });
   });
 </script>
 
